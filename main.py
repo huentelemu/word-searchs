@@ -1,10 +1,11 @@
 from wordsearch import WordSearch
 
 words = [
-    'perro',
-    'gato',
-    'raton',
+    'Perro',
+    'Gato',
+    'Ratón',
+    'Araña',
 ]
 
-w = WordSearch(words=words, shape=(20, 20))
-print(w.soup)
+w = WordSearch(original_words=words, shape=(10, 10))
+w.print_soup()
