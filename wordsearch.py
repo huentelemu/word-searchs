@@ -12,14 +12,15 @@ class WordSearch:
     def __init__(self, original_words=[], shape=(20, 20)):
 
         # If any word might not fit in the soup, raise exception
-        if max(map(len, ['asd', 'qwer'])) > min(shape):
+        if max(map(len, original_words)) > min(shape):
             raise Exception('A word is longer than shortest soup side')
 
         self.width = shape[0]
         self.height = shape[1]
         self.soup = np.zeros(shape, dtype=str)
 
-        words = self.clean_words(original_words)
+        self.original_words = original_words
+        words = self.clean_words(self.original_words)
         self.coords_words_list = self.add_words(self.soup.copy(), words)
         if not self.coords_words_list:
             raise Exception('Combination not found')
