@@ -15,8 +15,8 @@ class WordSearch:
         if max(map(len, original_words)) > min(shape):
             raise Exception('A word is longer than shortest soup side')
 
-        self.width = shape[0]
-        self.height = shape[1]
+        self.height = shape[0]
+        self.width = shape[1]
         self.soup = np.zeros(shape, dtype=str)
 
         self.original_words = original_words
@@ -118,6 +118,6 @@ class WordSearch:
     def print_soup(self):
         for i in range(self.soup.shape[0]):
             print_string = ''
-            for j in range(self.soup.shape[0]):
+            for j in range(self.soup.shape[1]):
                 print_string += self.soup[i, j] if self.soup[i, j] else '-'
             print(print_string)

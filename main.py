@@ -8,5 +8,5 @@ words = [
 ]
 
 mr = MineroReader()
-w = WordSearch(original_words=mr.groups_of_words[0], shape=(15, 15))
+w = WordSearch(original_words=mr.groups_of_words[0], shape=(20, 25))
 w.print_soup()
