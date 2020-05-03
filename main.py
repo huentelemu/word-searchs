@@ -8,5 +8,11 @@ words = [
 ]
 
 mr = MineroReader()
-w = WordSearch(original_words=mr.groups_of_words[0], shape=(20, 25))
-w.print_soup()
+
+for words in mr.groups_of_words:
+    w = WordSearch(original_words=words, shape=(29, 17))
+    if w.combination_found:
+        w.print_soup()
+    else:
+        print('Combination not found')
+    print('\n')
