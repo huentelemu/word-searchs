@@ -6,4 +6,5 @@ app_name = 'puzzleprinter'
 urlpatterns = [
     # ex: /polls/
     path('', views.index, name='index'),
+    path('upload/', views.upload, name='upload')
 ]
