@@ -1,6 +1,8 @@
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
 
 from .forms import BookForm
 from .models import Book
@@ -41,3 +43,16 @@ def upload_book(request):
     return render(request, 'puzzleprinter/upload_book.html', {
         'form': form,
     })
+
+
+class BookListView(ListView):
+    model = Book
+    template_name = 'class_book_list.html'
+    context_object_name = 'books'
+
+
+class UploadBookView(CreateView):
+    model = Book
+    fields = BookForm
+    success_url = reverse_lazy('class_book_list')
+    template_name = 'upload_book.html'
