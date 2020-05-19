@@ -44,6 +44,12 @@ def upload_book(request):
         'form': form,
     })
 
+def delete_book(request, pk):
+    if request.method == 'POST':
+        book = Book.objects.get(pk=pk)
+        book.delete()
+    return redirect('book_list')
+
 
 class BookListView(ListView):
     model = Book
