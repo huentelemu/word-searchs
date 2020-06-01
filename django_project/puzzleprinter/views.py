@@ -46,8 +46,15 @@ def upload_book(request):
 
 
 def upload_list_words(request):
+    if request.method == 'POST':
+        form = WordsListForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('results')
+    else:
+        form = WordsListForm()
     return render(request, 'puzzleprinter/upload_list_words.html', {
-        'form': WordsListForm,
+        'form': form,
     })
 
 

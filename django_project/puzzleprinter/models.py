@@ -1,6 +1,6 @@
 from django.db import models
 
-DIMENSION_CHOICES = [(str(i), str(i)) for i in range(15, 36)]
+DIMENSION_CHOICES = [(i, i) for i in range(15, 36)]
 
 
 class Book(models.Model):
