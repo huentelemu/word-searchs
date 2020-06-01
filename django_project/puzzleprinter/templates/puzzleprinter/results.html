@@ -1,0 +1,30 @@
+{% extends 'puzzleprinter/header.html' %}
+
+{% block content %}
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>Lista de palabras</th>
+                <th>Sopa</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for soup in soups %}
+                <tr>
+                    <td>
+                        {% for word in soup.original_words %}
+                            <p>
+                                {{ word }}
+                            </p>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        <p>
+                            {{ soup.string_representation }}
+                        </p>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

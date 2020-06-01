@@ -1,5 +1,8 @@
 from django.db import models
 
+from django_project.mysite.settings import MEDIA_URL
+from django_project.puzzleprinter.utils import read_words_file
+
 DIMENSION_CHOICES = [(i, i) for i in range(15, 36)]
 
 
@@ -20,5 +23,14 @@ class Book(models.Model):
 
 class WordsList(models.Model):
     words_file = models.FileField(upload_to='sopas/lista/')
-    width = models.IntegerField(default=25, choices=DIMENSION_CHOICES)
-    height = models.IntegerField(default=25, choices=DIMENSION_CHOICES)
+    width = models.IntegerField(default=17, choices=DIMENSION_CHOICES)
+    height = models.IntegerField(default=29, choices=DIMENSION_CHOICES)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def deliver_list_of_lists(self):
+        file_path = 'media/' + self.words_file.name
+        return read_words_file(file_path)
+
+# class Sopa(models.Model):
+#     words_list = models.ForeignKey(WordsList, on_delete=models.CASCADE())

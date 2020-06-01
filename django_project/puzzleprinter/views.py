@@ -1,14 +1,16 @@
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView
 
 from .forms import BookForm, WordsListForm
-from .models import Book
+from .models import Book, WordsList
 
 # Create your views here.
 from django.template import loader
+
+from .utils import read_words_file, WordSearch
 
 
 def index(request):
@@ -49,12 +51,27 @@ def upload_list_words(request):
     if request.method == 'POST':
         form = WordsListForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('results')
+            word_list = form.save()
+            print('asd', word_list.id)
+            # return redirect('results')
+            return HttpResponseRedirect(reverse('results', args=(word_list.id,)))
     else:
         form = WordsListForm()
     return render(request, 'puzzleprinter/upload_list_words.html', {
         'form': form,
+    })
+
+
+def results(request, pk):
+    words_list = WordsList.objects.get(pk=pk)
+    list_of_lists = words_list.deliver_list_of_lists()
+    soups = []
+    for soup_list in list_of_lists:
+        soup = WordSearch(original_words=soup_list, shape=(29, 17))
+        print(soup.string_representation)
+        soups.append(soup)
+    return render(request, 'puzzleprinter/results.html', {
+        'soups': soups,
     })
 
 
