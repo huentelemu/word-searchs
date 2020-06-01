@@ -1,5 +1,7 @@
 from django.db import models
 
+DIMENSION_CHOICES = [(str(i), str(i)) for i in range(15, 36)]
+
 
 class Book(models.Model):
     title = models.CharField(max_length=100)
@@ -14,3 +16,9 @@ class Book(models.Model):
         self.pdf.delete()
         self.cover.delete()
         super().delete(*args, **kwargs)
+
+
+class WordsList(models.Model):
+    words_file = models.FileField(upload_to='sopas/lista/')
+    width = models.IntegerField(default=25, choices=DIMENSION_CHOICES)
+    height = models.IntegerField(default=25, choices=DIMENSION_CHOICES)

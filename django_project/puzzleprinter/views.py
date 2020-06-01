@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
-from .forms import BookForm
+from .forms import BookForm, WordsListForm
 from .models import Book
 
 # Create your views here.
@@ -43,6 +43,13 @@ def upload_book(request):
     return render(request, 'puzzleprinter/upload_book.html', {
         'form': form,
     })
+
+
+def upload_list_words(request):
+    return render(request, 'puzzleprinter/upload_list_words.html', {
+        'form': WordsListForm,
+    })
+
 
 def delete_book(request, pk):
     if request.method == 'POST':
