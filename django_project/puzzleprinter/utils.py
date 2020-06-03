@@ -218,10 +218,10 @@ class WordSearch:
                                  outline="black")
 
             # Make squares interior not transparent but white
-            gris = 255
-            drawer.rectangle(((rect_y + widen_rectangle + 1, rect_x + widen_rectangle + 1),
-                             (rect_y + square_side - widen_rectangle - 1, rect_x + square_side - widen_rectangle - 1)),
-                             fill=(gris, gris, gris))
+            # gris = 255
+            # drawer.rectangle(((rect_y + widen_rectangle + 1, rect_x + widen_rectangle + 1),
+            #                  (rect_y + square_side - widen_rectangle - 1, rect_x + square_side - widen_rectangle - 1)),
+            #                  fill=(gris, gris, gris))
 
             if c == '-':
                 continue
