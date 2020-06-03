@@ -1,6 +1,7 @@
 import numpy as np
-from random import random, shuffle
+from random import random, shuffle, choice
 from time import perf_counter
+from PIL import Image, ImageDraw, ImageFont
 
 
 HORIZONTAL = 0
@@ -41,7 +42,15 @@ class WordSearch:
                 word_coords['letter_coordinates']
             )
 
-        self.string_representation = self.represent_as_string()
+        # Insert random characters in complete soup
+        characters_list = list(range(65, 91))
+        characters_list.append(209)
+        characters_list = list(map(chr, characters_list))
+        self.complete_soup = self.soup.copy()
+        for (i, j), c in np.ndenumerate(self.complete_soup):
+            if c == '':
+                self.complete_soup[i, j] = choice(characters_list)
+
 
     def represent_as_string(self):
         print_string = ''
@@ -182,6 +191,66 @@ class WordSearch:
                 else:
                     print_string += '-'
             print(print_string)
+
+    def draw_image(self, character_matrix):
+        square_side = 80
+        margin_offset = 10
+        widen_rectangle = 2
+
+        image = Image.new(
+            'RGBA',
+            tuple(np.array(character_matrix.shape)[[1, 0]] * square_side + margin_offset * 2),
+            color=(200, 200, 200, 0)
+        )
+        drawer = ImageDraw.Draw(image)
+        font = ImageFont.truetype("arial.ttf", 60)
+
+        for (i, j), c in np.ndenumerate(character_matrix):
+            # Prepare squares
+            rect_y = margin_offset + j * square_side
+            rect_x = margin_offset + i * square_side
+
+            # Draw squares
+            for w in range(-widen_rectangle, widen_rectangle + 1):
+                drawer.rectangle(((rect_y + w, rect_x + w), (rect_y + square_side - w, rect_x + square_side - w)),
+                                 outline="black")
+
+            # Make squares interior not transparent but white
+            gris = 255
+            drawer.rectangle(((rect_y + widen_rectangle + 1, rect_x + widen_rectangle + 1),
+                             (rect_y + square_side - widen_rectangle - 1, rect_x + square_side - widen_rectangle - 1)),
+                             fill=(gris, gris, gris))
+
+            if c == '-':
+                continue
+
+            # Draw letter
+            text_w, text_h = drawer.textsize(c, font)
+            char_h_offset = int((square_side - text_w) / 2 * 1.05)
+            char_w_offset = int((square_side - text_h) / 2 * 0.6)
+
+            drawer.text(
+                (j * square_side + char_h_offset + margin_offset, i * square_side + char_w_offset + margin_offset),
+                c,
+                fill=(0, 0, 0),
+                font=font
+            )
+
+        return image
+
+    def draw_soup(self):
+        return self.draw_image(self.complete_soup)
+
+    def draw_solution(self):
+        return self.draw_image(self.soup)
+
+    def write_soup(self):
+        image = self.draw_soup()
+        image.save('Sopa.png', 'png')
+
+    def write_solution(self):
+        image = self.draw_solution()
+        image.save('Solucion.png', 'png')
 
 
 def read_words_file(file_path):
