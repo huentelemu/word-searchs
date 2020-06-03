@@ -12,16 +12,15 @@
             {% for soup in soups %}
                 <tr>
                     <td>
-                        {% for word in soup.original_words %}
-                            <p>
-                                {{ word }}
-                            </p>
-                        {% endfor %}
+                        <p>
+                            {{ soup.list_of_words|linebreaks }}
+                        </p>
                     </td>
                     <td>
                         <p>
-                            {{ soup.string_representation }}
+                            {{ soup.soup|linebreaks }}
                         </p>
+
                     </td>
                 </tr>
             {% endfor %}

@@ -32,5 +32,8 @@ class WordsList(models.Model):
         file_path = 'media/' + self.words_file.name
         return read_words_file(file_path)
 
-# class Sopa(models.Model):
-#     words_list = models.ForeignKey(WordsList, on_delete=models.CASCADE())
+
+class Sopa(models.Model):
+    words_list_object = models.ForeignKey(WordsList, on_delete=models.CASCADE)
+    list_of_words = models.TextField()
+    soup = models.TextField(null=True)

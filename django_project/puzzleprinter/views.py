@@ -5,7 +5,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView
 
 from .forms import BookForm, WordsListForm
-from .models import Book, WordsList
+from .models import Book, WordsList, Sopa
 
 # Create your views here.
 from django.template import loader
@@ -52,8 +52,15 @@ def upload_list_words(request):
         form = WordsListForm(request.POST, request.FILES)
         if form.is_valid():
             word_list = form.save()
-            print('asd', word_list.id)
-            # return redirect('results')
+            list_of_lists = word_list.deliver_list_of_lists()
+            for list_of_words in list_of_lists:
+                ws = WordSearch(original_words=list_of_words, shape=(29, 17))
+                soup = ws.string_representation
+                soup = Sopa(list_of_words="\n".join(list_of_words),
+                            words_list_object=word_list,
+                            soup=soup)
+                soup.save()
+
             return HttpResponseRedirect(reverse('results', args=(word_list.id,)))
     else:
         form = WordsListForm()
@@ -64,14 +71,8 @@ def upload_list_words(request):
 
 def results(request, pk):
     words_list = WordsList.objects.get(pk=pk)
-    list_of_lists = words_list.deliver_list_of_lists()
-    soups = []
-    for soup_list in list_of_lists:
-        soup = WordSearch(original_words=soup_list, shape=(29, 17))
-        print(soup.string_representation)
-        soups.append(soup)
     return render(request, 'puzzleprinter/results.html', {
-        'soups': soups,
+        'soups': words_list.sopa_set.all(),
     })
 
 
