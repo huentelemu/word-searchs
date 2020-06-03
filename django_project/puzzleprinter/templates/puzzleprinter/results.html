@@ -6,6 +6,7 @@
             <tr>
                 <th>Lista de palabras</th>
                 <th>Sopa</th>
+                <th>Solucion</th>
             </tr>
         </thead>
         <tbody>
@@ -17,10 +18,10 @@
                         </p>
                     </td>
                     <td>
-                        <p>
-                            {{ soup.soup|linebreaks }}
-                        </p>
-
+                        <img src="{{ soup.soup_image.url }}"  style="width:300px">
+                    </td>
+                    <td>
+                        <img src="{{ soup.solution_image.url }}"  style="width:300px">
                     </td>
                 </tr>
             {% endfor %}

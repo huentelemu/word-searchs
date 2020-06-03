@@ -1,3 +1,6 @@
+from io import BytesIO
+
+from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -55,11 +58,26 @@ def upload_list_words(request):
             list_of_lists = word_list.deliver_list_of_lists()
             for list_of_words in list_of_lists:
                 ws = WordSearch(original_words=list_of_words, shape=(29, 17))
-                soup = ws.string_representation
+
                 soup = Sopa(list_of_words="\n".join(list_of_words),
                             words_list_object=word_list,
-                            soup=soup)
+                            soup=ws.string_representation)
+
                 soup.save()
+
+                soup_image = ws.draw_soup()
+                soup_image_io = BytesIO()
+                soup_image.save(soup_image_io, format='png')
+
+                solution_image = ws.draw_solution()
+                solution_image_io = BytesIO()
+                solution_image.save(solution_image_io, format='png')
+
+                soup.soup_image.save(str(soup.pk) + '-soup.png', ContentFile(soup_image_io.getvalue()))
+                soup.solution_image.save(str(soup.pk) + '-solution.png', ContentFile(solution_image_io.getvalue()))
+
+                solution_image_io.close()
+                solution_image_io.close()
 
             return HttpResponseRedirect(reverse('results', args=(word_list.id,)))
     else:

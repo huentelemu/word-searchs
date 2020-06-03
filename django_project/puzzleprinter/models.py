@@ -37,3 +37,6 @@ class Sopa(models.Model):
     words_list_object = models.ForeignKey(WordsList, on_delete=models.CASCADE)
     list_of_words = models.TextField()
     soup = models.TextField(null=True)
+    soup_image = models.ImageField(upload_to='sopas/', null=True, blank=True)
+    solution_image = models.ImageField(upload_to='sopas/', null=True, blank=True)
+

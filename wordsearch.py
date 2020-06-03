@@ -42,6 +42,8 @@ class WordSearch:
                 word_coords['letter_coordinates']
             )
 
+        self.string_representation = self.represent_as_string()
+
         # Insert random characters in complete soup
         characters_list = list(range(65, 91))
         characters_list.append(209)
