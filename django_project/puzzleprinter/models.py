@@ -39,4 +39,9 @@ class Sopa(models.Model):
     soup = models.TextField(null=True)
     soup_image = models.ImageField(upload_to='sopas/', null=True, blank=True)
     solution_image = models.ImageField(upload_to='sopas/', null=True, blank=True)
+    list_file = models.FileField(upload_to='sopas/', null=True, blank=True)
 
+    def delete(self, *args, **kwargs):
+        self.soup_image.delete()
+        self.solution_image.delete()
+        super().delete(*args, **kwargs)

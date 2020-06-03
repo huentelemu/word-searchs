@@ -1,3 +1,4 @@
+import zipfile
 from io import BytesIO
 
 from django.core.files.base import ContentFile
@@ -79,6 +80,8 @@ def upload_list_words(request):
                 solution_image_io.close()
                 solution_image_io.close()
 
+                soup.list_file.save(str(soup.pk) + '-list.txt', ContentFile("\n".join(list_of_words)))
+
             return HttpResponseRedirect(reverse('results', args=(word_list.id,)))
     else:
         form = WordsListForm()
@@ -89,9 +92,21 @@ def upload_list_words(request):
 
 def results(request, pk):
     words_list = WordsList.objects.get(pk=pk)
-    return render(request, 'puzzleprinter/results.html', {
-        'soups': words_list.sopa_set.all(),
-    })
+    if request.method == 'POST':
+        response = HttpResponse(content_type='application/zip')
+        zip_file = zipfile.ZipFile(response, 'w')
+        for soup in words_list.sopa_set.all():
+            zip_file.write('media/' + soup.soup_image.name, str(soup.pk) + '-sopa.png')
+            zip_file.write('media/' + soup.solution_image.name, str(soup.pk) + '-solucion.png')
+            zip_file.write('media/' + soup.list_file.name, str(soup.pk) + '-lista.txt')
+
+        zip_file.close()
+        response['Content-Disposition'] = 'attachment; filename={}'.format('media/zipfile.zip')
+        return response
+    else:
+        return render(request, 'puzzleprinter/results.html', {
+            'soups': words_list.sopa_set.all(),
+        })
 
 
 def delete_book(request, pk):

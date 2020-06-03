@@ -6,7 +6,7 @@
             <tr>
                 <th>Lista de palabras</th>
                 <th>Sopa</th>
-                <th>Solucion</th>
+                <th>Solución</th>
             </tr>
         </thead>
         <tbody>
@@ -18,13 +18,20 @@
                         </p>
                     </td>
                     <td>
-                        <img src="{{ soup.soup_image.url }}"  style="width:300px">
+                        <img src="{{ soup.soup_image.url }}"  style="width:400px">
                     </td>
                     <td>
-                        <img src="{{ soup.solution_image.url }}"  style="width:300px">
+                        <img src="{{ soup.solution_image.url }}"  style="width:400px">
                     </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Descargar Sopas</button>
+        </form>
+    </p>
+
 {% endblock %}
