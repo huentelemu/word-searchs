@@ -208,14 +208,14 @@ class WordSearch:
         font = ImageFont.truetype("arial.ttf", 60)
 
         for (i, j), c in np.ndenumerate(character_matrix):
-            # Prepare squares
-            rect_y = margin_offset + j * square_side
-            rect_x = margin_offset + i * square_side
-
-            # Draw squares
-            for w in range(-widen_rectangle, widen_rectangle + 1):
-                drawer.rectangle(((rect_y + w, rect_x + w), (rect_y + square_side - w, rect_x + square_side - w)),
-                                 outline="black")
+            # # Prepare squares
+            # rect_y = margin_offset + j * square_side
+            # rect_x = margin_offset + i * square_side
+            #
+            # # Draw squares
+            # for w in range(-widen_rectangle, widen_rectangle + 1):
+            #     drawer.rectangle(((rect_y + w, rect_x + w), (rect_y + square_side - w, rect_x + square_side - w)),
+            #                      outline="black")
 
             # Make squares interior not transparent but white
             # gris = 255
