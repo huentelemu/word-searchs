@@ -1,7 +1,6 @@
 from django.db import models
 
-from django_project.mysite.settings import MEDIA_URL
-from django_project.puzzleprinter.utils import read_words_file
+from .utils import read_words_file
 
 DIMENSION_CHOICES = [(i, i) for i in range(15, 36)]
 
@@ -37,11 +36,16 @@ class Sopa(models.Model):
     words_list_object = models.ForeignKey(WordsList, on_delete=models.CASCADE)
     list_of_words = models.TextField()
     soup = models.TextField(null=True)
+
+
+class SopaMedia(models.Model):
     soup_image = models.ImageField(upload_to='sopas/', null=True, blank=True)
     solution_image = models.ImageField(upload_to='sopas/', null=True, blank=True)
     list_file = models.FileField(upload_to='sopas/', null=True, blank=True)
+    soup = models.ForeignKey(Sopa, on_delete=models.CASCADE, related_name="media")
 
     def delete(self, *args, **kwargs):
         self.soup_image.delete()
         self.solution_image.delete()
+        self.list_file.delete()
         super().delete(*args, **kwargs)

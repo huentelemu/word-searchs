@@ -18,10 +18,10 @@
                         </p>
                     </td>
                     <td>
-                        <img src="{{ soup.soup_image.url }}"  style="width:400px">
+                        <img src="{{ soup.media.all.0.soup_image.url }}"  style="width:400px">
                     </td>
                     <td>
-                        <img src="{{ soup.solution_image.url }}"  style="width:400px">
+                        <img src="{{ soup.media.all.0.solution_image.url }}"  style="width:400px">
                     </td>
                 </tr>
             {% endfor %}
