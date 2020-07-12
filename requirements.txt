@@ -1,0 +1,6 @@
+pillow
+numpy
+uWSGI
+django
+django-crispy-forms
+django-materializecss-form
