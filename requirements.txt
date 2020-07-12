@@ -1,4 +1,4 @@
-pillow
+Pillow
 numpy
 uWSGI
 django
