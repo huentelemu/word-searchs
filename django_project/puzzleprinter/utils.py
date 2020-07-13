@@ -11,10 +11,11 @@ VERTICAL = 2
 
 class WordSearch:
 
-    def __init__(self, original_words=[], shape=(20, 20), n_orientations=8):
+    def __init__(self, original_words=[], shape=(20, 20), n_orientations=8, font_size=90):
 
         self.original_words = original_words
         self.n_orientations = n_orientations
+        self.font_size = font_size
         words = self.clean_words(self.original_words)
 
         # Append words with edge space savers
@@ -235,7 +236,7 @@ class WordSearch:
             color=(200, 200, 200, 0)
         )
         drawer = ImageDraw.Draw(image)
-        font = ImageFont.truetype("tungab.ttf", 90)
+        font = ImageFont.truetype("tungab.ttf", self.font_size)
 
         for (i, j), c in np.ndenumerate(character_matrix):
             # # Prepare squares
