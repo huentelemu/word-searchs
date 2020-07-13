@@ -2,7 +2,6 @@ import zipfile
 from io import BytesIO
 
 from django.core.files.base import ContentFile
-from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
