@@ -7,8 +7,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .forms import BookForm, WordsListForm
-from .models import Book, WordsList, Sopa, SopaMedia
+from .forms import WordsListForm
+from .models import WordsList, Sopa, SopaMedia
 
 from .utils import WordSearch
 
