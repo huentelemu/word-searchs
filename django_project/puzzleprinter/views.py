@@ -17,16 +17,6 @@ def index(request):
     return render(request, 'puzzleprinter/index.html')
 
 
-def upload(request):
-    context = {}
-    if request.method == 'POST':
-        uploaded_file = request.FILES["document"]
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name, uploaded_file)
-        context['url'] = fs.url(name)
-    return render(request, 'puzzleprinter/upload.html', context)
-
-
 def upload_list_words(request):
     if request.method == 'POST':
         form = WordsListForm(request.POST, request.FILES)
@@ -34,10 +24,9 @@ def upload_list_words(request):
             word_list = form.save()
             list_of_lists = word_list.deliver_list_of_lists()
             for list_of_words in list_of_lists:
-                ws = WordSearch(original_words=list_of_words, shape=(29, 17))
                 soup = Sopa(list_of_words="\n".join(list_of_words),
                             words_list_object=word_list,
-                            soup=ws.string_representation)
+                            soup='deprecated')
                 soup.save()
 
             return HttpResponseRedirect(reverse('results', args=(word_list.id,)))
@@ -70,8 +59,11 @@ def results(request, pk):
         # Prepare Sopa media
         height = words_list.height
         width = words_list.width
+        n_orientations = words_list.n_orientations
         for soup in words_list.sopa_set.all():
-            ws = WordSearch(original_words=soup.list_of_words.split("\n"), shape=(height, width))
+            ws = WordSearch(original_words=soup.list_of_words.split("\n"),
+                            shape=(height, width),
+                            n_orientations=n_orientations)
 
             soup_image = ws.draw_soup()
             soup_image_io = BytesIO()
