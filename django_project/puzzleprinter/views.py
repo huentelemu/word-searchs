@@ -54,12 +54,12 @@ def results(request, pk):
         response = HttpResponse(content_type='application/zip')
         zip_file = zipfile.ZipFile(response, 'w')
         for soup in words_list.sopa_set.all():
-            zip_file.write('media/' + soup.media.first().soup_image.name, str(soup.pk) + '-sopa.png')
-            zip_file.write('media/' + soup.media.first().solution_image.name, str(soup.pk) + '-solucion.png')
-            zip_file.write('media/' + soup.media.first().list_file.name, str(soup.pk) + '-lista.txt')
+            zip_file.write('/vol/web/media/' + soup.media.first().soup_image.name, str(soup.pk) + '-sopa.png')
+            zip_file.write('/vol/web/media/' + soup.media.first().solution_image.name, str(soup.pk) + '-solucion.png')
+            zip_file.write('/vol/web/media/' + soup.media.first().list_file.name, str(soup.pk) + '-lista.txt')
 
         zip_file.close()
-        response['Content-Disposition'] = 'attachment; filename={}'.format('media/zipfile.zip')
+        response['Content-Disposition'] = 'attachment; filename={}'.format('/vol/web/media/zipfile.zip')
         return response
     else:
 
