@@ -1,3 +1,4 @@
+import codecs
 import numpy as np
 from random import random, shuffle, choice
 from time import perf_counter
@@ -287,7 +288,8 @@ class WordSearch:
 
 
 def read_words_file(file_path):
-    with open(file_path, "r", encoding="ISO-8859-1") as f:
+    #with open(file_path, "r", encoding="ISO-8859-1") as f:
+    with codecs.open(file_path, "r", "utf-8") as f:
         f.seek(0, 2)  # Jumps to the end
         end_location = f.tell()  # Give you the end location (characters from start)
         f.seek(0)  # Jump to the beginning of the file again
