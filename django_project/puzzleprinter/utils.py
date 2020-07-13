@@ -11,9 +11,10 @@ VERTICAL = 2
 
 class WordSearch:
 
-    def __init__(self, original_words=[], shape=(20, 20)):
+    def __init__(self, original_words=[], shape=(20, 20), n_orientations=8):
 
         self.original_words = original_words
+        self.n_orientations = n_orientations
         words = self.clean_words(self.original_words)
 
         # Append words with edge space savers
@@ -105,15 +106,34 @@ class WordSearch:
             word, *rest_of_words = words
 
             # Get random feasible coordinates for word
-            orientation = int(random() * 3)
-            if orientation <= 1:
+            orientation = int(random() * self.n_orientations)
+
+            if orientation == 0:
                 x0 = int(random() * (self.width - len(word)))
-            else:
-                x0 = int(random() * self.width)
-            if orientation >= 1:
-                y0 = int(random() * (self.height - len(word)))
-            else:
                 y0 = int(random() * self.height)
+            elif orientation == 1:
+                x0 = int(random() * (self.width - len(word)))
+                y0 = int(random() * (self.height - len(word)))
+            elif orientation == 2:
+                x0 = int(random() * self.width)
+                y0 = int(random() * (self.height - len(word)))
+            elif orientation == 3:
+                x0 = int(random() * (self.width - len(word))) + len(word) - 1
+                y0 = int(random() * (self.height - len(word)))
+            elif orientation == 4:
+                x0 = int(random() * (self.width - len(word))) + len(word) - 1
+                y0 = int(random() * self.height)
+            elif orientation == 5:
+                x0 = int(random() * (self.width - len(word))) + len(word) - 1
+                y0 = int(random() * (self.height - len(word))) + len(word) - 1
+            elif orientation == 6:
+                x0 = int(random() * self.width)
+                y0 = int(random() * (self.height - len(word))) + len(word) - 1
+            elif orientation == 7:
+                x0 = int(random() * (self.width - len(word)))
+                y0 = int(random() * (self.height - len(word))) + len(word) - 1
+            else:
+                raise Exception('Orientation type not recognized')
 
             # Prepare letter coordinates
             letter_coordinates = self.prepare_letter_coordinates(word, x0, y0, orientation)
@@ -160,12 +180,22 @@ class WordSearch:
         # Prepare letter coordinates
         letter_coordinates = []
         for i in range(len(word)):
-            if orientation == HORIZONTAL:
+            if orientation == 0:
                 letter_coordinates.append((y0, x0 + i))
-            elif orientation == DIAGONAL:
+            elif orientation == 1:
                 letter_coordinates.append((y0 + i, x0 + i))
-            elif orientation == VERTICAL:
+            elif orientation == 2:
                 letter_coordinates.append((y0 + i, x0))
+            elif orientation == 3:
+                letter_coordinates.append((y0 + i, x0 - i))
+            elif orientation == 4:
+                letter_coordinates.append((y0, x0 - i))
+            elif orientation == 5:
+                letter_coordinates.append((y0 - i, x0 - i))
+            elif orientation == 6:
+                letter_coordinates.append((y0 - i, x0))
+            elif orientation == 7:
+                letter_coordinates.append((y0 - i, x0 + i))
             else:
                 raise Exception('Orientation type not recognized')
         return letter_coordinates
