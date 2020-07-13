@@ -1,11 +1,5 @@
 from django import forms
-from .models import Book, WordsList
-
-
-class BookForm(forms.ModelForm):
-    class Meta:
-        model = Book
-        fields = ('title', 'author', 'pdf', 'cover')
+from .models import WordsList
 
 
 class WordsListForm(forms.ModelForm):
