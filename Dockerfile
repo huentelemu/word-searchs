@@ -20,6 +20,9 @@ RUN mkdir -p /vol/web/static
 RUN adduser -D user
 RUN chown -R user:user /vol
 RUN chmod -R 755 /vol/web
+RUN chown -R user:user /django_project
+RUN chmod -R 755 /django_project
+
 USER user
 
 CMD ["entrypoint.sh"]
