@@ -32,7 +32,6 @@ ALLOWED_HOSTS = ['huentelemu.com', 'www.huentelemu.com', 'localhost', '127.0.0.1
 
 INSTALLED_APPS = [
     'puzzleprinter.apps.PuzzleprinterConfig',
-    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
