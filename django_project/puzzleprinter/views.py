@@ -4,17 +4,13 @@ from io import BytesIO
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, CreateView
+from django.shortcuts import render
+from django.urls import reverse
 
-from .forms import BookForm, WordsListForm
-from .models import Book, WordsList, Sopa, SopaMedia
+from .forms import WordsListForm
+from .models import WordsList, Sopa, SopaMedia
 
-# Create your views here.
-from django.template import loader
-
-from .utils import read_words_file, WordSearch
+from .utils import WordSearch
 
 
 def index(request):
@@ -29,26 +25,6 @@ def upload(request):
         name = fs.save(uploaded_file.name, uploaded_file)
         context['url'] = fs.url(name)
     return render(request, 'puzzleprinter/upload.html', context)
-
-
-def book_list(request):
-    books = Book.objects.all()
-    return render(request, 'puzzleprinter/book_list.html', {
-        'books': books,
-    })
-
-
-def upload_book(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('book_list')
-    else:
-        form = BookForm()
-    return render(request, 'puzzleprinter/upload_book.html', {
-        'form': form,
-    })
 
 
 def upload_list_words(request):
@@ -78,12 +54,12 @@ def results(request, pk):
         response = HttpResponse(content_type='application/zip')
         zip_file = zipfile.ZipFile(response, 'w')
         for soup in words_list.sopa_set.all():
-            zip_file.write('media/' + soup.media.first().soup_image.name, str(soup.pk) + '-sopa.png')
-            zip_file.write('media/' + soup.media.first().solution_image.name, str(soup.pk) + '-solucion.png')
-            zip_file.write('media/' + soup.media.first().list_file.name, str(soup.pk) + '-lista.txt')
+            zip_file.write('/vol/web/media/' + soup.media.first().soup_image.name, str(soup.pk) + '-sopa.png')
+            zip_file.write('/vol/web/media/' + soup.media.first().solution_image.name, str(soup.pk) + '-solucion.png')
+            zip_file.write('/vol/web/media/' + soup.media.first().list_file.name, str(soup.pk) + '-lista.txt')
 
         zip_file.close()
-        response['Content-Disposition'] = 'attachment; filename={}'.format('media/zipfile.zip')
+        response['Content-Disposition'] = 'attachment; filename={}'.format('/vol/web/media/zipfile.zip')
         return response
     else:
 
@@ -119,23 +95,3 @@ def results(request, pk):
         return render(request, 'puzzleprinter/results.html', {
             'soups': words_list.sopa_set.all(),
         })
-
-
-def delete_book(request, pk):
-    if request.method == 'POST':
-        book = Book.objects.get(pk=pk)
-        book.delete()
-    return redirect('book_list')
-
-
-class BookListView(ListView):
-    model = Book
-    template_name = 'class_book_list.html'
-    context_object_name = 'books'
-
-
-class UploadBookView(CreateView):
-    model = Book
-    fields = BookForm
-    success_url = reverse_lazy('class_book_list')
-    template_name = 'upload_book.html'
