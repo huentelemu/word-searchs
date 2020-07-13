@@ -13,7 +13,7 @@ class WordsList(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def deliver_list_of_lists(self):
-        file_path = 'media/' + self.words_file.name
+        file_path = '/vol/web/media/' + self.words_file.name
         return read_words_file(file_path)
 
 
