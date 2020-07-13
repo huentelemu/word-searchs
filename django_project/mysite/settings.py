@@ -25,7 +25,7 @@ SECRET_KEY = '^6!kjsd-e-c_na*3*^m^oz+u$bw&-i@s^v2gd*4k_^fgmu)gdb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['huentelemu.com', 'www.huentelemu.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
