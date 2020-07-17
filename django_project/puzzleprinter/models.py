@@ -2,7 +2,7 @@ from django.db import models
 
 from .utils import read_words_file
 
-DIMENSION_CHOICES = [(i, i) for i in range(15, 36)]
+DIMENSION_CHOICES = [(i, i) for i in range(8, 36)]
 N_ORIENTATION_CHOICES = [(i, i) for i in range(1, 9)]
 
 
