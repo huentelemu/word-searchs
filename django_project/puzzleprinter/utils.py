@@ -289,28 +289,32 @@ class WordSearch:
 
 def read_words_file(file_path):
     #with open(file_path, "r", encoding="ISO-8859-1") as f:
-    with codecs.open(file_path, "r", "utf-8") as f:
-        f.seek(0, 2)  # Jumps to the end
-        end_location = f.tell()  # Give you the end location (characters from start)
-        f.seek(0)  # Jump to the beginning of the file again
-        # Skip Header
-        while True:
-            line = f.readline().strip().upper()
-            if line[:11] == '* * * GRUPO':
-                break
 
-        groups_of_words = []
-        words = []
-        while True:
-            line = f.readline().strip().upper()
-            if f.tell() == end_location:
-                groups_of_words.append(sorted(words))
+    groups_of_words = []
+    with codecs.open(file_path, "r", "utf-8") as f:
+        lines = [line.rstrip('\n').strip().upper() for line in f.readlines()]
+
+        index = 0
+
+        # Skip Header
+        while index < len(lines):
+            if lines[index][:11] == '* * * GRUPO':
                 break
+            index += 1
+
+        # Read words
+        words = []
+        while index < len(lines):
+            line = lines[index]
             if line[:11] == '* * * GRUPO':
+                if len(words) > 0:
+                    groups_of_words.append(sorted(words))
+                    words = []
+            elif len(line) > 0:
+                words.append(line)
+            index += 1
+        else:
+            if len(words) > 0:
                 groups_of_words.append(sorted(words))
-                words = []
-                continue
-            if line == '':
-                continue
-            words.append(line)
+
         return groups_of_words
