@@ -12,11 +12,12 @@ VERTICAL = 2
 
 class WordSearch:
 
-    def __init__(self, original_words=[], shape=(20, 20), n_orientations=8, font_size=90):
+    def __init__(self, original_words=[], shape=(20, 20), n_orientations=8, font_size=90, square_size=80):
 
         self.original_words = original_words
         self.n_orientations = n_orientations
         self.font_size = font_size
+        self.square_size = square_size
         words = self.clean_words(self.original_words)
 
         # Append words with edge space savers
@@ -227,13 +228,13 @@ class WordSearch:
             print(print_string)
 
     def draw_image(self, character_matrix):
-        square_side = 80
+        square_size = self.square_size
         margin_offset = 10
-        widen_rectangle = 2
+        # widen_rectangle = 2
 
         image = Image.new(
             'RGBA',
-            tuple(np.array(character_matrix.shape)[[1, 0]] * square_side + margin_offset * 2),
+            tuple(np.array(character_matrix.shape)[[1, 0]] * square_size + margin_offset * 2),
             color=(200, 200, 200, 0)
         )
         drawer = ImageDraw.Draw(image)
@@ -260,11 +261,11 @@ class WordSearch:
 
             # Draw letter
             text_w, text_h = drawer.textsize(c, font)
-            char_h_offset = int((square_side - text_w) / 2 * 1.05)
-            char_w_offset = int((square_side - text_h) / 2 * 0.6)
+            char_h_offset = int((square_size - text_w) / 2 * 1.05)
+            char_w_offset = int((square_size - text_h) / 2 * 0.6)
 
             drawer.text(
-                (j * square_side + char_h_offset + margin_offset, i * square_side + char_w_offset + margin_offset),
+                (j * square_size + char_h_offset + margin_offset, i * square_size + char_w_offset + margin_offset),
                 c,
                 fill=(0, 0, 0),
                 font=font

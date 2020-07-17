@@ -12,6 +12,7 @@ class WordsList(models.Model):
     height = models.IntegerField(default=29, choices=DIMENSION_CHOICES)
     n_orientations = models.IntegerField(default=8, choices=N_ORIENTATION_CHOICES)
     font_size = models.IntegerField(default=90)
+    square_size = models.IntegerField(default=80)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
