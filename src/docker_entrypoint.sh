@@ -12,4 +12,4 @@ python manage.py migrate
 #    --email=admin@example.com \
 #    --password=pass
 
-uwsgi --socket :80 --master --enable-threads --module wsgi
+uwsgi --socket :80 --master --enable-threads --module wsgi --protocol=http
