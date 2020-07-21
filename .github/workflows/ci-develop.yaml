@@ -30,7 +30,7 @@ jobs:
           BUILD_CONTEXT: 'src/'
         env:
           INPUT_TAG: 'develop'
-#          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       # Import default KUBECONFIG from secrets
 #      - name: Import default KUBECONFIG from secrets
