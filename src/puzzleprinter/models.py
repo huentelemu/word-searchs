@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 from .utils import read_words_file
 
@@ -17,7 +18,7 @@ class WordsList(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def deliver_list_of_lists(self):
-        file_path = '/vol/web/media/' + self.words_file.name
+        file_path = f'{settings.MEDIA_ROOT}/' + self.words_file.name
         return read_words_file(file_path)
 
 

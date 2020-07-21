@@ -2,8 +2,8 @@
 
 set -e
 
-mkdir -f /huentelemu/media/
-mkdir -f /huentelemu/static/
+mkdir -p /huentelemu/media/
+mkdir -p /huentelemu/static/
 
 python manage.py collectstatic --noinput
 #python manage.py makemigrations

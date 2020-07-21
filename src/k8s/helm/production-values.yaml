@@ -5,7 +5,7 @@
 namespace: production
 
 image:
-  repository: docker.pkg.github.com/sharck-io/sharck.io-website/sharck.io-website
+  repository: docker.pkg.github.com/huentelemu/word-searchs/word-searchs
   tag: "latest"
   pullPolicy: Always
 

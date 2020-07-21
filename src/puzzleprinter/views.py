@@ -5,6 +5,7 @@ from django.core.files.base import ContentFile
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.conf import settings
 
 from .forms import WordsListForm
 from .models import WordsList, Sopa, SopaMedia
@@ -42,9 +43,9 @@ def results(request, pk):
         response = HttpResponse(content_type='application/zip')
         zip_file = zipfile.ZipFile(response, 'w')
         for soup in words_list.sopa_set.all():
-            zip_file.write('/vol/web/media/' + soup.media.first().soup_image.name, str(soup.pk) + '-sopa.png')
-            zip_file.write('/vol/web/media/' + soup.media.first().solution_image.name, str(soup.pk) + '-solucion.png')
-            zip_file.write('/vol/web/media/' + soup.media.first().list_file.name, str(soup.pk) + '-lista.txt')
+            zip_file.write(f'{settings.MEDIA_ROOT}/' + soup.media.first().soup_image.name, str(soup.pk) + '-sopa.png')
+            zip_file.write(f'{settings.MEDIA_ROOT}/' + soup.media.first().solution_image.name, str(soup.pk) + '-solucion.png')
+            zip_file.write(f'{settings.MEDIA_ROOT}/' + soup.media.first().list_file.name, str(soup.pk) + '-lista.txt')
 
         zip_file.close()
         response['Content-Disposition'] = 'attachment; filename={}'.format('/vol/web/media/zipfile.zip')
