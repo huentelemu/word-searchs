@@ -24,7 +24,7 @@ jobs:
         uses: machine-learning-apps/gpr-docker-publish@master
         id: docker
         with:
-          IMAGE_NAME: 'word-search/'
+          IMAGE_NAME: 'word-searchs'
           TAG: 'develop'
           DOCKERFILE_PATH: 'src/k8s/Dockerfile'
           BUILD_CONTEXT: 'src/'
