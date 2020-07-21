@@ -49,11 +49,11 @@ ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/proxy-body-size: 200m
   hosts:
-    - host: huentelemu.sharck.io
+    - host: develop.huentelemu.com
   tls:
     - secretName: huentelemu-develop-k8s-tls
       hosts:
-        - huentelemu.sharck.io
+        - develop.huentelemu.com
 
 resources: {}
   # limits:
