@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM docker.pkg.github.com/sharck-io/sharck.io-python3-numpy/sharck.io-python3-numpy:latest
 
 LABEL maintainer="Pablo Huentelemu <pablo.huentelemu@gmail.com>"
 

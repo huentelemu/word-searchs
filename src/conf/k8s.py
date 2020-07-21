@@ -1,7 +1,7 @@
 from conf.base import *
 
 DEBUG = True
-ALLOWED_HOSTS = ['huentelemu.com', 'www.huentelemu.com']
+ALLOWED_HOSTS = ['*']
 
 DATABASES = {
     'default': {
