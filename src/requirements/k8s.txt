@@ -1,6 +1,6 @@
-Pillow
-numpy
-uWSGI
 django
 django-crispy-forms
 django-materializecss-form
+numpy
+Pillow
+uWSGI
