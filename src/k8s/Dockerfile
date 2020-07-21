@@ -9,7 +9,7 @@ CMD ls /requirements/
 CMD env
 
 # Install dependencies required for building the pip packages below
-RUN apk add --update --no-cache gcc libc-dev linux-headers jpeg-dev zlib-dev freetype-dev bash
+RUN apk add --update --no-cache gcc libc-dev linux-headers jpeg-dev zlib-dev freetype-dev bash postgresql-dev
 
 # Install project dependencies
 RUN pip install -r /requirements/k8s.txt
