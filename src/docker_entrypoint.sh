@@ -15,5 +15,4 @@ python manage.py migrate --settings=conf.k8s
 
 export DJANGO_SETTINGS_MODULE=conf.k8s
 
-uwsgi --socket :80 --master --enable-threads --module wsgi --protocol=http
-#gunicorn wsgi:application --name django --bind 0.0.0.0:80 --workers 1 --log-level=info --preload
+gunicorn wsgi:application --name django --bind 0.0.0.0:80 --workers 2 --log-level=info --preload

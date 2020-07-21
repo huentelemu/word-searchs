@@ -1,7 +1,7 @@
 django
 django-crispy-forms
 django-materializecss-form
-#gunicorn
+gunicorn
 numpy
 Pillow
 psycopg2-binary
