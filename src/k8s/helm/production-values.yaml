@@ -16,8 +16,8 @@ replicaCount: 1
 nameOverride: ""
 fullnameOverride: ""
 instance: "production"
-secretsName: "sharck-production"
-storageClaimName: do-sharck-website
+secretsName: "huentelemu-production"
+storageClaimName: do-huentelemu-website
 
 podAnnotations:
   timestamp: "foo-bar"
@@ -49,13 +49,13 @@ ingress:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/proxy-body-size: 200m
   hosts:
-    - host: "www.sharck.io"
-    - host: "sharck.io"
+    - host: "www.huentelemu.com"
+    - host: "huentelemu.com"
   tls:
-    - secretName: sharck-production-k8s-tls
+    - secretName: huentelemu-production-k8s-tls
       hosts:
-        - "www.sharck.io"
-        - "sharck.io"
+        - "www.huentelemu.com"
+        - "huentelemu.com"
 
 resources: {}
   # limits:
