@@ -238,7 +238,7 @@ class WordSearch:
             color=(200, 200, 200, 0)
         )
         drawer = ImageDraw.Draw(image)
-        font = ImageFont.truetype("tungab.ttf", self.font_size)
+        font = ImageFont.truetype("static/fonts/tungab.ttf", self.font_size)
 
         for (i, j), c in np.ndenumerate(character_matrix):
             # # Prepare squares
