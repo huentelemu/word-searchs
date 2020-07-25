@@ -1,0 +1,56 @@
+name: CI-DEVELOP
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      # checkout current branch
+      - name: Copy Repo Files
+        uses: actions/checkout@master
+
+      # We use the current time to recreate the pods later on
+      - name: Get current date for helm deployment trigger (--recreate-pods)
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d %H:%M:%S')"
+
+      # This Action Emits 2 Variables, IMAGE_SHA_NAME and IMAGE_URL
+      # which you can reference in subsequent steps
+      - name: Publish Docker Image to GPR
+        uses: machine-learning-apps/gpr-docker-publish@master
+        id: docker
+        with:
+          IMAGE_NAME: 'word-searchs'
+          TAG: 'develop'
+          DOCKERFILE_PATH: 'src/k8s/Dockerfile'
+          BUILD_CONTEXT: 'src/'
+        env:
+          INPUT_TAG: 'develop'
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      # Import default KUBECONFIG from secrets
+#      - name: Import default KUBECONFIG from secrets
+#        run: |
+#          # prepare kube config
+#          mkdir -p ~/.kube/
+#          echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
+
+      # Install helm and upgrade chart on kubernetes cluster
+#      - name: Install helm and upgrade chart on kubernetes cluster
+#        run: |
+#          # install helm
+#          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+#          chmod 700 get_helm.sh
+#          ./get_helm.sh
+#
+#          # upgrade helm chart
+#          helm upgrade --install \
+#              huentelemu-develop \
+#              ./src/k8s/helm \
+#              --values ./src/k8s/helm/develop-values.yaml \
+#              --namespace=develop \
+#              --set-string podAnnotations.timestamp="${{steps.date.outputs.date}}"

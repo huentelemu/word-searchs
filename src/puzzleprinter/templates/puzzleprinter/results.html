@@ -1,0 +1,37 @@
+{% extends 'puzzleprinter/header.html' %}
+
+{% block content %}
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th>Lista de palabras</th>
+                <th>Sopa</th>
+                <th>Solución</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for soup in soups %}
+                <tr>
+                    <td>
+                        <p>
+                            {{ soup.list_of_words|linebreaks }}
+                        </p>
+                    </td>
+                    <td>
+                        <img src="{{ soup.media.all.0.soup_image.url }}"  style="width:400px">
+                    </td>
+                    <td>
+                        <img src="{{ soup.media.all.0.solution_image.url }}"  style="width:400px">
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Descargar Sopas</button>
+        </form>
+    </p>
+
+{% endblock %}

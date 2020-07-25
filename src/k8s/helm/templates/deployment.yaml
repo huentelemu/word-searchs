@@ -1,0 +1,132 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    {{- include "helm.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      {{- include "helm.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        {{- include "helm.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "helm.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ .Values.storageClaimName }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - mountPath: /huentelemu
+              name: data
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /admin/
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /admin/
+              port: http
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: INSTANCE
+            value: {{ .Values.instance }}
+          - name: POSTGRES_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  postgres-user
+          - name: POSTGRES_PASS
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  postgres-pass
+          - name: POSTGRES_DB
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  postgres-db
+          - name: POSTGRES_HOST
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  postgres-host
+          - name: POSTGRES_PORT
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  postgres-port
+          - name: DJANGO_EMAIL_HOST
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  django-email-host
+          - name: DJANGO_EMAIL_PORT
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  django-email-port
+          - name: DJANGO_EMAIL_USER
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  django-email-username
+          - name: DJANGO_EMAIL_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  django-email-password
+          - name: DJANGO_EMAIL_USE_TLS
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  django-email-use-tls
+          - name: DJANGO_EMAIL_FROM
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  django-email-default-from
+          - name: DJANGO_EMAIL_REPLY_TO
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.secretsName }}
+                key:  django-email-reply-to
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

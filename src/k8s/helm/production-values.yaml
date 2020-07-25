@@ -1,0 +1,79 @@
+# Default values for helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: production
+
+image:
+  repository: docker.pkg.github.com/huentelemu/word-searchs/word-searchs
+  tag: "latest"
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: regcred
+
+replicaCount: 1
+nameOverride: ""
+fullnameOverride: ""
+instance: "production"
+secretsName: "huentelemu-production"
+storageClaimName: do-huentelemu-website
+
+podAnnotations:
+  timestamp: "foo-bar"
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-body-size: 200m
+  hosts:
+    - host: "www.huentelemu.com"
+    - host: "huentelemu.com"
+  tls:
+    - secretName: huentelemu-production-k8s-tls
+      hosts:
+        - "www.huentelemu.com"
+        - "huentelemu.com"
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 1
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
