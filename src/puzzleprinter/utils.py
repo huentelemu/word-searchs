@@ -289,10 +289,11 @@ class WordSearch:
 
 
 def read_words_file(file_path):
-    #with open(file_path, "r", encoding="ISO-8859-1") as f:
 
     groups_of_words = []
-    with codecs.open(file_path, "r", "utf-8") as f:
+    # with codecs.open(file_path, "rb") as f:
+    # with open(file_path, 'rb') as f:
+    with open(file_path, "r", encoding="ISO-8859-1") as f:
         lines = [line.rstrip('\n').strip().upper() for line in f.readlines()]
 
         index = 0
