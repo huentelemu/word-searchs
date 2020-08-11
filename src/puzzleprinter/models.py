@@ -5,7 +5,7 @@ from .utils import read_words_file
 
 DIMENSION_CHOICES = [(i, i) for i in range(8, 36)]
 N_ORIENTATION_CHOICES = [(i, i) for i in range(1, 9)]
-
+ENCODING_CHOICES = [(i, i) for i in ['utf-8', 'ISO-8859-1']]
 
 class WordsList(models.Model):
     words_file = models.FileField(upload_to='sopas/lista/')
@@ -14,12 +14,13 @@ class WordsList(models.Model):
     n_orientations = models.IntegerField(default=8, choices=N_ORIENTATION_CHOICES)
     font_size = models.IntegerField(default=90)
     square_size = models.IntegerField(default=80)
+    encoding = models.TextField(choices=ENCODING_CHOICES)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
     def deliver_list_of_lists(self):
         file_path = f'{settings.MEDIA_ROOT}/' + self.words_file.name
-        return read_words_file(file_path)
+        return read_words_file(file_path, self.encoding)
 
 
 class Sopa(models.Model):
