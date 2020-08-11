@@ -7,6 +7,7 @@ DIMENSION_CHOICES = [(i, i) for i in range(8, 36)]
 N_ORIENTATION_CHOICES = [(i, i) for i in range(1, 9)]
 ENCODING_CHOICES = [(i, i) for i in ['ISO-8859-1', 'utf-8']]
 
+
 class WordsList(models.Model):
     words_file = models.FileField(upload_to='sopas/lista/')
     width = models.IntegerField(default=17, choices=DIMENSION_CHOICES)
