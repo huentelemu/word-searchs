@@ -288,13 +288,13 @@ class WordSearch:
         image.save('Solucion.png', 'png')
 
 
-def read_words_file(file_path):
+def read_words_file(file_path, encoding):
 
     groups_of_words = []
     # with open(file_path, "r", encoding="ISO-8859-1") as f:
     # with codecs.open(file_path, "rb", encoding="utf-8") as f:
     # with open(file_path, 'rb') as f:
-    with codecs.open(file_path, "r", encoding="ISO-8859-1") as f:
+    with codecs.open(file_path, "r", encoding=encoding) as f:
         lines = [line.rstrip('\n').strip().upper() for line in f.readlines()]
 
         index = 0
