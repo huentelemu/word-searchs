@@ -6,7 +6,7 @@ class WordsListForm(forms.ModelForm):
 
     class Meta:
         model = WordsList
-        fields = ['words_file', 'width', 'height', 'n_orientations', 'font_size', 'square_size', 'encoding']
+        fields = ['words_file', 'width', 'height', 'n_orientations', 'font_size', 'square_size', 'encoding', 'fill']
         labels = {
             'words_file': 'Lista de palabras',
             'width': 'Ancho',
