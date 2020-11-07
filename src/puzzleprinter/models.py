@@ -6,6 +6,7 @@ from .utils import read_words_file
 DIMENSION_CHOICES = [(i, i) for i in range(8, 36)]
 N_ORIENTATION_CHOICES = [(i, i) for i in range(1, 9)]
 ENCODING_CHOICES = [(i, i) for i in ['ISO-8859-1', 'utf-8']]
+FILL_CHOICES = [(i, i) for i in ['Letras', 'Números']]
 
 
 class WordsList(models.Model):
@@ -16,6 +17,7 @@ class WordsList(models.Model):
     font_size = models.IntegerField(default=90)
     square_size = models.IntegerField(default=80)
     encoding = models.TextField(default='ISO-8859-1', choices=ENCODING_CHOICES)
+    fill = models.TextField(default='Letras', choices=FILL_CHOICES)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

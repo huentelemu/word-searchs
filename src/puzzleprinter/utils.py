@@ -12,7 +12,7 @@ VERTICAL = 2
 
 class WordSearch:
 
-    def __init__(self, original_words=[], shape=(20, 20), n_orientations=8, font_size=90, square_size=80):
+    def __init__(self, original_words=[], shape=(20, 20), n_orientations=8, font_size=90, square_size=80, fill=fill):
 
         self.original_words = original_words
         self.n_orientations = n_orientations
@@ -49,9 +49,14 @@ class WordSearch:
         self.string_representation = self.represent_as_string()
 
         # Insert random characters in complete soup
-        characters_list = list(range(65, 91))
-        characters_list.append(209)
-        characters_list = list(map(chr, characters_list))
+        if fill == 'Letras':
+            # Fill with letters
+            characters_list = list(range(65, 91))
+            characters_list.append(209)
+            characters_list = list(map(chr, characters_list))
+        else:
+            # Fill with numbers
+            characters_list = list(map(chr, range(48, 58)))
         self.complete_soup = self.soup.copy()
         for (i, j), c in np.ndenumerate(self.complete_soup):
             if c == '':

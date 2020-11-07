@@ -62,12 +62,14 @@ def results(request, pk):
         n_orientations = words_list.n_orientations
         font_size = words_list.font_size
         square_size = words_list.square_size
+        fill = words_list.fill
         for soup in words_list.sopa_set.all():
             ws = WordSearch(original_words=soup.list_of_words.split("\n"),
                             shape=(height, width),
                             n_orientations=n_orientations,
                             font_size=font_size,
-                            square_size=square_size)
+                            square_size=square_size,
+                            fill=fill)
 
             soup_image = ws.draw_soup()
             soup_image_io = BytesIO()

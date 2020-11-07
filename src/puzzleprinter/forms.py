@@ -15,4 +15,5 @@ class WordsListForm(forms.ModelForm):
             'font_size': 'Tamaño de fuente',
             'square_size': 'Tamaño de cuadro',
             'encoding': 'Codificación',
+            'fill': 'Rellenar con',
         }
