@@ -6,7 +6,7 @@ from .utils import read_words_file
 DIMENSION_CHOICES = [(i, i) for i in range(8, 36)]
 N_ORIENTATION_CHOICES = [(i, i) for i in range(1, 9)]
 ENCODING_CHOICES = [(i, i) for i in ['ISO-8859-1', 'utf-8']]
-FILL_CHOICES = [(i, i) for i in ['Letras', 'Números']]
+FILL_CHOICES = [(i, i) for i in ['Letras', 'Numeros']]
 
 
 class WordsList(models.Model):
