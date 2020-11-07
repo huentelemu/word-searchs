@@ -12,7 +12,7 @@ VERTICAL = 2
 
 class WordSearch:
 
-    def __init__(self, original_words=[], shape=(20, 20), n_orientations=8, font_size=90, square_size=80, fill=fill):
+    def __init__(self, original_words=[], shape=(20, 20), n_orientations=8, font_size=90, square_size=80, fill='Letras'):
 
         self.original_words = original_words
         self.n_orientations = n_orientations
